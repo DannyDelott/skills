@@ -1,11 +1,6 @@
 ---
-<<<<<<< HEAD:to-prd/SKILL.md
 name: to-prd
-description: Turn the current conversation context into a PRD and submit it as a GitHub issue. Use when user wants to create a PRD from the current context.
-=======
-name: write-a-prd
-description: Create a PRD through user interview, codebase exploration, and module design, then submit as a GitHub issue with the PRD label attached. Use when user wants to write a PRD, create a product requirements document, or plan a new feature.
->>>>>>> f6165ab (Add instruction for adding PRD label to write-a-prd.md):write-a-prd/SKILL.md
+description: Turn the current conversation context into a PRD and submit it as a GitHub issue with the PRD label attached. Use when user wants to create a PRD from the current context.
 ---
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
@@ -20,7 +15,7 @@ A deep module (as opposed to a shallow module) is one which encapsulates a lot o
 
 Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
 
-3. Write the PRD using the template below and submit it as a GitHub issue.
+3. Write the PRD using the template below and submit it as a GitHub issue with the PRD label attached.
 
 <prd-template>
 
