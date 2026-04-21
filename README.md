@@ -2,6 +2,23 @@
 
 A collection of agent skills that extend capabilities across planning, development, and tooling.
 
+## Local Setup
+
+This repo is the source of truth for shared skills.
+
+- Authoritative skill sources live in `/Users/danny/Documents/projects/skills/<skill-name>/`
+- `~/.agents/skills/<skill-name>` points at the repo copy
+- `~/.claude/skills/<skill-name>` points at `~/.agents/skills/<skill-name>`
+- `~/.codex/skills/<skill-name>` points at `~/.agents/skills/<skill-name>`
+
+To add a new global skill:
+
+1. Create the skill folder in this repo with a `SKILL.md`.
+2. Add the matching symlink in `~/.agents/skills/`.
+3. Add the matching symlink in `~/.claude/skills/`.
+4. Add the matching symlink in `~/.codex/skills/` if Codex should see it too.
+5. Verify the links with `readlink`.
+
 ## Planning & Design
 
 These skills help you think through problems before writing code.
@@ -83,6 +100,8 @@ These skills help you write, refactor, and fix code.
   ```
   npx skills@latest add mattpocock/skills/git-guardrails-claude-code
   ```
+
+- **show-me** — After a change is done, copy `.env` from local `main`, start the local UI server, and hand back the URL to open.
 
 ## Writing & Knowledge
 
