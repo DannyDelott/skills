@@ -24,3 +24,5 @@ Read review comments on a PR, clarify anything ambiguous, then implement all fee
 7. **Verify** — run tests and check for type errors or lint issues. Review the diff. Fix anything you broke.
 
 8. **Push and resolve** — commit, force-push with lease, then mark each review thread as resolved via `gh`.
+
+9. **Wait for CI** - The work is only complete once all checks pass and the Vercel deployment succeeded. If it fails, investigate the issue and try again.

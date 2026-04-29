@@ -10,7 +10,7 @@ Use this when the user says `show me` after you have finished a change.
 ## Workflow
 
 1. Go to the target repo root.
-2. Overwrite the current `.env` with the copy from local `main`.
+2. Overwrite the current `.env` for the UI with the copy from local `main`.
 3. Start the local UI server with the repo's normal dev command.
 4. Give the user the server URL to open.
 
