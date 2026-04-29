@@ -6,13 +6,13 @@ A collection of agent skills that extend capabilities across planning, developme
 
 These skills help you think through problems before writing code.
 
-- **to-prd** — Turn the current conversation context into a PRD and submit it as a GitHub issue. No interview — just synthesizes what you've already discussed.
+- **to-prd** — Turn the current conversation context into a PRD and publish it to the project issue tracker. No interview — just synthesizes what you've already discussed.
 
   ```
   npx skills@latest add mattpocock/skills/to-prd
   ```
 
-- **to-issues** — Break any plan, spec, or PRD into independently-grabbable GitHub issues using vertical slices.
+- **to-issues** — Break any plan, spec, or PRD into independently-grabbable issues using vertical slices.
 
   ```
   npx skills@latest add mattpocock/skills/to-issues
@@ -22,6 +22,12 @@ These skills help you think through problems before writing code.
 
   ```
   npx skills@latest add mattpocock/skills/grill-me
+  ```
+
+- **grill-with-docs** — Stress-test a plan against the project's domain language and documented decisions, updating context docs and ADRs as decisions crystallize.
+
+  ```
+  npx skills@latest add mattpocock/skills
   ```
 
 - **design-an-interface** — Generate multiple radically different interface designs for a module using parallel sub-agents.
@@ -46,13 +52,13 @@ These skills help you write, refactor, and fix code.
   npx skills@latest add mattpocock/skills/tdd
   ```
 
-- **triage-issue** — Investigate a bug by exploring the codebase, identify the root cause, and file a GitHub issue with a TDD-based fix plan.
+- **triage** — Triage issues through the project issue tracker state machine, including issue classification, agent briefs, needs-info notes, and wontfix handling.
 
   ```
-  npx skills@latest add mattpocock/skills/triage-issue
+  npx skills@latest add mattpocock/skills
   ```
 
-- **improve-codebase-architecture** — Explore a codebase for architectural improvement opportunities, focusing on deepening shallow modules and improving testability.
+- **improve-codebase-architecture** — Find deepening opportunities in a codebase, informed by domain language and documented architecture decisions.
 
   ```
   npx skills@latest add mattpocock/skills/improve-codebase-architecture
@@ -85,6 +91,8 @@ These skills help you write, refactor, and fix code.
   ```
 
 - **show-me** — After a change is done, copy `.env` from local `main`, start the local UI server, and hand back the URL to open.
+
+- **update-pocock-skills** — Sync selected Matt Pocock skills from upstream into this repo's root-level global skill layout while flagging conflicts and new upstream skills.
 
 ## Writing & Knowledge
 
