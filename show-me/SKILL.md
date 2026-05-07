@@ -1,27 +1,36 @@
 ---
+
 name: show-me
-description: Starts the local UI server after copying `.env` from the local `main` branch. Use when the user says "show me" after a change and wants the app running locally.
+description: Starts the local UI server after copying the UI `.env` from local `main`.
+
 ---
 
 # Show Me
 
-Use this when the user says `show me` after you have finished a change.
+Use when the user says `show me` and wants the UI running locally. If given a PR, use that branch and display it.
 
 ## Workflow
 
-1. Go to the target repo root.
-2. Overwrite the current `.env` for the UI with the copy from local `main`.
-3. Start the local UI server with the repo's normal dev command.
-4. Give the user the server URL to open.
+1. Find the UI app path that owns the dev server.
+2. Copy that UI app's `.env` from local `main` into the same path on the current branch. It will likely not be a tracked file in git, and that is expected.
+3. Start the UI with the repo's normal dev command.
+4. Give the user the printed local URL.
 
-## Env enforcement
+## Env
 
-- Prefer `git show main:.env > .env` from the repo root.
-- Do not use remote env files or hand-written copies.
-- If `main` does not contain `.env`, say so and stop.
+- Prefer this command:
 
-## Server start
+  ```sh
+  git show main:<ui-app-path>/.env > <ui-app-path>/.env
+  ```
 
-- Use the repo's existing local UI command.
-- Prefer the package script named `dev`; otherwise use the repo's standard UI start script.
-- Report the exact URL the server prints, usually `http://localhost:<port>`.
+- Do not use `main:.env > .env` unless the UI app env is actually at repo root.
+- Do not copy root `.env` into a UI app.
+- Do not copy UI `.env` into repo root.
+- Do not use remote, generated, or hand-written env files.
+- If the UI `.env` is missing from local `main`, say so and stop.
+
+## Server
+
+- Use the existing UI dev command.
+- Report the exact URL the server prints.
