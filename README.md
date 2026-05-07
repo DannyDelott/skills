@@ -94,6 +94,8 @@ These skills help you write, refactor, and fix code.
 
 - **update-pocock-skills** — Sync selected Matt Pocock skills from upstream into this repo's root-level global skill layout while flagging conflicts and new upstream skills.
 
+- **yeet** — Publish local work by staging explicit files, committing, pushing, and opening a ready-for-review PR. This local skill replaces the GitHub plugin's draft-PR-oriented `github:yeet` workflow.
+
 ## Writing & Knowledge
 
 - **write-a-skill** — Create new skills with proper structure, progressive disclosure, and bundled resources.
