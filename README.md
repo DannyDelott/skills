@@ -76,6 +76,12 @@ These skills help you write, refactor, and fix code.
   npx skills@latest add mattpocock/skills/scaffold-exercises
   ```
 
+- **maptiler-sdk-js** — Build interactive web maps with MapTiler SDK JS, including geocoding, location search, 3D terrain, heatmaps, clustering, and framework-specific patterns.
+
+  ```
+  npx skills@latest add maptiler/agent-skills
+  ```
+
 ## Tooling & Setup
 
 - **setup-pre-commit** — Set up Husky pre-commit hooks with lint-staged, Prettier, type checking, and tests.
