@@ -29,17 +29,24 @@ These are the currently selected upstream skills:
 
 ```text
 design-an-interface=skills/deprecated/design-an-interface
+diagnose=skills/engineering/diagnose
 edit-article=skills/personal/edit-article
 grill-me=skills/productivity/grill-me
 grill-with-docs=skills/engineering/grill-with-docs
+handoff=skills/productivity/handoff
 improve-codebase-architecture=skills/engineering/improve-codebase-architecture
+prototype=skills/engineering/prototype
 request-refactor-plan=skills/deprecated/request-refactor-plan
+review=skills/in-progress/review
 tdd=skills/engineering/tdd
 to-issues=skills/engineering/to-issues
 to-prd=skills/engineering/to-prd
 triage=skills/engineering/triage
 ubiquitous-language=skills/deprecated/ubiquitous-language
 write-a-skill=skills/productivity/write-a-skill
+writing-beats=skills/in-progress/writing-beats
+writing-fragments=skills/in-progress/writing-fragments
+writing-shape=skills/in-progress/writing-shape
 ```
 
 Explicitly excluded unless the user asks:
