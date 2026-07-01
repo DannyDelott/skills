@@ -29,23 +29,33 @@ These are the currently selected upstream skills:
 
 ```text
 design-an-interface=skills/deprecated/design-an-interface
-diagnose=skills/engineering/diagnose
+ask-matt=skills/engineering/ask-matt
+code-review=skills/engineering/code-review
+codebase-design=skills/engineering/codebase-design
+decision-mapping=skills/in-progress/decision-mapping
+diagnosing-bugs=skills/engineering/diagnosing-bugs
+domain-modeling=skills/engineering/domain-modeling
 edit-article=skills/personal/edit-article
 grill-me=skills/productivity/grill-me
 grill-with-docs=skills/engineering/grill-with-docs
+grilling=skills/productivity/grilling
 handoff=skills/productivity/handoff
+implement=skills/engineering/implement
 improve-codebase-architecture=skills/engineering/improve-codebase-architecture
+loop-me=skills/in-progress/loop-me
 prototype=skills/engineering/prototype
 request-refactor-plan=skills/deprecated/request-refactor-plan
-review=skills/in-progress/review
+resolving-merge-conflicts=skills/engineering/resolving-merge-conflicts
+teach=skills/productivity/teach
 tdd=skills/engineering/tdd
 to-issues=skills/engineering/to-issues
 to-prd=skills/engineering/to-prd
 triage=skills/engineering/triage
 ubiquitous-language=skills/deprecated/ubiquitous-language
-write-a-skill=skills/productivity/write-a-skill
+wizard=skills/in-progress/wizard
 writing-beats=skills/in-progress/writing-beats
 writing-fragments=skills/in-progress/writing-fragments
+writing-great-skills=skills/productivity/writing-great-skills
 writing-shape=skills/in-progress/writing-shape
 ```
 
@@ -54,6 +64,7 @@ Explicitly excluded unless the user asks:
 ```text
 caveman
 setup-matt-pocock-skills
+write-a-skill
 ```
 
 ## Process
