@@ -46,6 +46,7 @@ loop-me=skills/in-progress/loop-me
 prototype=skills/engineering/prototype
 request-refactor-plan=skills/deprecated/request-refactor-plan
 resolving-merge-conflicts=skills/engineering/resolving-merge-conflicts
+research=skills/engineering/research
 teach=skills/productivity/teach
 tdd=skills/engineering/tdd
 to-tickets=skills/engineering/to-tickets
