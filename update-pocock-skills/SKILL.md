@@ -49,6 +49,7 @@ resolving-merge-conflicts=skills/engineering/resolving-merge-conflicts
 research=skills/engineering/research
 teach=skills/productivity/teach
 tdd=skills/engineering/tdd
+to-questionnaire=skills/in-progress/to-questionnaire
 to-tickets=skills/engineering/to-tickets
 to-spec=skills/engineering/to-spec
 triage=skills/engineering/triage
