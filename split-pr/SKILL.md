@@ -36,7 +36,8 @@ report when one exists. Inspect the full diff and measure it using the
 repository's PR-budget rules.
 
 Keep the source branch unchanged so the complete implementation remains
-recoverable throughout the split.
+recoverable throughout the split. When it already has an oversized PR, keep
+that PR open as the umbrella for the split.
 
 ### 2. Design the stack
 
@@ -60,6 +61,28 @@ contents, base or dependency, counted additions, and verification.
 
 Get the user's approval before creating or rewriting branches or PRs.
 
+Once approved, add the `oversized` label to the original PR. Create the label
+when it is missing and the repository permits it. Post one tracking comment on
+the original PR using this shape:
+
+```md
+<!-- split-pr-tracker -->
+## Split tracking
+
+**Status:** In progress
+**Why this was split:** <reviewability summary>
+**Source issue/spec:** <links>
+
+| Slice | Review question | Issue | PR | Status |
+| ----- | --------------- | ----- | -- | ------ |
+| 1     | ...             | ...   | ... | Planned |
+
+**Landing order:** ...
+```
+
+Keep this as one durable comment: find it by its marker and edit it as the split
+progresses instead of posting disconnected progress comments.
+
 ### 4. Carve and verify
 
 Create a separate branch or worktree for each approved PR. Build the first from
@@ -73,6 +96,8 @@ For every branch:
 2. Confirm it satisfies the repository's PR budget.
 3. Run the relevant tests, typechecking, linting, and build checks.
 4. Commit only when the slice is coherent and green.
+5. Update the original PR's tracking comment with its branch, issue, PR, and
+   current status.
 
 If a slice cannot be made independently safe, revise the stack instead of
 weakening verification or forcing an arbitrary split.
@@ -81,9 +106,12 @@ weakening verification or forcing an arbitrary split.
 
 When the user asks for publication, push and open the PRs in dependency order.
 State each PR's review question, parent, verification, and landing order in its
-description. Do not close or replace an existing oversized PR until its
-replacement stack is available and the user has approved that action.
+description. Keep the original oversized PR open and leave its `oversized`
+label applied unless the user explicitly asks to close it. Update its tracking
+comment with every child link and mark the split complete when all planned PRs
+are available.
 
 Finish when the source remains recoverable and every carved PR is within
 budget, green at its declared base, and explicit about its dependency and
-review question.
+review question, and the original PR accurately shows the split's plan and
+progress.
