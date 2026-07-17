@@ -48,6 +48,17 @@ A PR may contain supporting work, but it should have one primary review
 question. Closely coupled questions may stay together when separating them
 would create an unsafe or unverifiable intermediate state.
 
+## Same-slice consumption
+
+Introduce each field, config key, schema property, type member, helper, or
+export in the first PR whose production behaviour consumes it to answer that
+PR's review question. A planned consumer in a later slice is not a current
+consumer, and a test-only reference does not justify unused production surface.
+
+For every new surface, answer: "What in this PR consumes this, and why does this
+PR need it?" If the answer points to a later slice, move the surface and its
+tests or documentation to that slice.
+
 ## Process
 
 ### 1. Understand the complete change
@@ -67,6 +78,7 @@ List the review questions in the complete change, then group the diff into the
 smallest useful set of PRs. Each proposed PR must:
 
 - have one primary review question;
+- obey same-slice consumption;
 - satisfy the repository's PR budget;
 - be green and mergeable at its declared base;
 - include the code, tests, and generated artifacts needed for its behaviour;
@@ -117,10 +129,11 @@ slice matches the approved boundary.
 For every branch:
 
 1. Review its diff against its declared base.
-2. Confirm it satisfies the repository's PR budget.
-3. Run the relevant tests, typechecking, linting, and build checks.
-4. Commit only when the slice is coherent and green.
-5. Update the original PR's tracking comment with its branch, issue, PR, and
+2. Audit same-slice consumption for every new surface.
+3. Confirm it satisfies the repository's PR budget.
+4. Run the relevant tests, typechecking, linting, and build checks.
+5. Commit only when the slice is coherent and green.
+6. Update the original PR's tracking comment with its branch, issue, PR, and
    current status.
 
 If a slice cannot be made independently safe, revise the stack instead of
