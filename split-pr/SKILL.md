@@ -1,12 +1,33 @@
 ---
 name: split-pr
-description: Split an oversized or cognitively dense branch into a stack of focused, reviewable pull requests. Use when a code review recommends a PR split, a branch exceeds its repository's PR budget, or a change bundles multiple review questions that should land separately.
+description: Split an oversized or cognitively dense branch into a stack of focused, reviewable pull requests. Use when a code review recommends a PR split, a branch exceeds its repository's PR budget, a change bundles multiple review questions that should land separately, or the user asks to process PRs labeled `oversized:research`.
 ---
 
 # Split PR
 
 Turn a completed working branch into a stack of focused PRs. Preserve the
 source branch as the complete reference implementation.
+
+## Research queue
+
+Treat `oversized:research` as the inbox for PRs that may need splitting, and
+`oversized` as the confirmed umbrella state for a tracked split.
+
+When asked to process the research queue, inspect open PRs labeled
+`oversized:research` one at a time. Run `/code-review` against the PR's base when
+it has no current reviewability report, then update the original PR's durable
+`<!-- split-pr-tracker -->` comment with the finding and proposed stack,
+creating that comment when it does not exist.
+
+- If no split is needed, explain why in the comment and remove
+  `oversized:research`.
+- If the split needs approval, leave `oversized:research` applied and mark the
+  comment `Awaiting approval`.
+- If the user already authorized splitting any PR that needs it, or approves
+  the plan, replace `oversized:research` with `oversized` and continue through
+  this skill.
+
+Keep the original PR open in every branch of this workflow.
 
 ## Review questions
 
@@ -61,9 +82,10 @@ contents, base or dependency, counted additions, and verification.
 
 Get the user's approval before creating or rewriting branches or PRs.
 
-Once approved, add the `oversized` label to the original PR. Create the label
-when it is missing and the repository permits it. Post one tracking comment on
-the original PR using this shape:
+Once approved, replace `oversized:research` with `oversized` on the original PR,
+or add `oversized` when the research label was not present. Create either label
+when it is missing and the repository permits it. Post or update one tracking
+comment on the original PR using this shape:
 
 ```md
 <!-- split-pr-tracker -->
