@@ -5,109 +5,85 @@ description: Split an oversized or cognitively dense branch into a stack of focu
 
 # Split PR
 
-Carve a completed working branch into focused branches that can be reviewed and
-landed safely in dependency order. Preserve the source branch as the complete
-reference implementation.
+Turn a completed working branch into a stack of focused PRs. Preserve the
+source branch as the complete reference implementation.
+
+## Review questions
+
+A **review question** is the main claim a reviewer must evaluate to approve a
+PR. Derive it from the spec and diff; it is not a fixed checklist. Common shapes
+include:
+
+- **Behaviour** — does this slice deliver the intended user or system behaviour?
+- **Contract** — is a public API, schema, or interface correct and compatible?
+- **Architecture** — is responsibility placed behind the right boundary?
+- **Migration** — can callers or data move safely from the old form to the new?
+- **Operations** — can the change be deployed, observed, and rolled back safely?
+- **Removal** — is the old path unused and safe to delete?
+- **Mechanical** — is a rename, move, or retype complete without changing behaviour?
+
+A PR may contain supporting work, but it should have one primary review
+question. Closely coupled questions may stay together when separating them
+would create an unsafe or unverifiable intermediate state.
 
 ## Process
 
-### 1. Pin the source and base
+### 1. Understand the complete change
 
-Record the source branch, its HEAD, the intended base branch, and the merge
-base. Require a clean worktree before changing branches. Fetch the remote refs
-without rebasing, resetting, amending, or force-pushing the source branch.
+Record the source branch, source SHA, base branch, and merge base. Read the
+originating issue or spec, repository standards, and the latest `/code-review`
+report when one exists. Inspect the full diff and measure it using the
+repository's PR-budget rules.
 
-Read the originating issue or spec, repository coding standards, and the latest
-`/code-review` report when one exists. If the report contains a suggested PR
-stack, treat it as the starting hypothesis rather than an instruction to copy
-blindly.
+Keep the source branch unchanged so the complete implementation remains
+recoverable throughout the split.
 
-This step is complete when the original implementation can always be recovered
-from the recorded source branch and SHA.
+### 2. Design the stack
 
-### 2. Map the review questions
+List the review questions in the complete change, then group the diff into the
+smallest useful set of PRs. Each proposed PR must:
 
-Inspect `git diff <merge-base>...<source>` and the source branch's commits.
-Measure additions using the repository's exact PR-budget and exclusion rules.
-
-Name each independent behavioural or architectural claim as a **review
-question**. Build a dependency graph whose nodes are proposed PRs. Each node
-must:
-
-- answer one coherent review question;
-- fit the repository's PR budget;
+- have one primary review question;
+- satisfy the repository's PR budget;
 - be green and mergeable at its declared base;
-- include the tests and generated artifacts needed for that question;
-- expose a useful, verifiable state after it lands.
+- include the code, tests, and generated artifacts needed for its behaviour;
+- leave the repository in a useful, verifiable state.
 
 Prefer complete vertical slices. For a wide mechanical change that cannot land
 vertically, use expand-migrate-contract: add the new form, migrate callers in
-reviewable batches, then remove the old form. Do not divide work by arbitrary
-file groups, equal line counts, or code without its tests.
+reviewable batches, then remove the old form.
 
-### 3. Confirm the stack
+### 3. Confirm the plan
 
-Present the proposed branches in landing order. For each branch, show:
+Present the proposed PRs in landing order. For each, show its review question,
+contents, base or dependency, counted additions, and verification.
 
-- review question;
-- declared base and dependencies;
-- included behaviour;
-- approximate counted additions;
-- verification that will prove it independently green.
+Get the user's approval before creating or rewriting branches or PRs.
 
-Ask for confirmation before creating, rewriting, pushing, closing, or retargeting
-branches or PRs. Revise the graph until every node has a coherent boundary and
-the user approves it.
+### 4. Carve and verify
 
-### 4. Carve without rewriting the source
+Create a separate branch or worktree for each approved PR. Build the first from
+the original base and each dependent PR from its approved parent. Prefer whole
+existing commits; otherwise select and edit the necessary changes until the
+slice matches the approved boundary.
 
-Create a separate branch or worktree for every approved node, following the
-repository's branch naming rules. Build the first node from the original base;
-build each dependent node from its approved parent branch.
-
-Prefer whole existing commits when they already match a node. Otherwise apply
-commits or hunks without committing, then edit the result until it forms the
-approved complete slice. Preserve authorship where practical. Never reset or
-force-push the source branch merely to manufacture the stack.
-
-After carving each node:
+For every branch:
 
 1. Review its diff against its declared base.
-2. Measure it against the repository's PR budget.
-3. Run its relevant tests, typechecking, linting, and build checks.
-4. Commit only when the slice is coherent, within budget, and green.
+2. Confirm it satisfies the repository's PR budget.
+3. Run the relevant tests, typechecking, linting, and build checks.
+4. Commit only when the slice is coherent and green.
 
-If a node cannot meet all three constraints without an unsafe intermediate
-state, stop and redesign the dependency graph rather than weakening tests or
-hiding required code in another PR.
+If a slice cannot be made independently safe, revise the stack instead of
+weakening verification or forcing an arbitrary split.
 
-### 5. Publish only when requested
+### 5. Publish when requested
 
-If the user requested publication, push the branches and open PRs in dependency
-order. Target the repository's normal base for the first PR and the approved
-parent branch for each dependent PR. In every PR body, state:
+When the user asks for publication, push and open the PRs in dependency order.
+State each PR's review question, parent, verification, and landing order in its
+description. Do not close or replace an existing oversized PR until its
+replacement stack is available and the user has approved that action.
 
-- its review question;
-- its parent PR or branch;
-- its counted additions and exclusions;
-- its verification;
-- the landing order and any retargeting needed after a parent merges.
-
-Do not close, replace, retarget, or force-update an existing oversized PR unless
-the user approved that action. When approved, mark it as superseded only after
-the replacement stack is available.
-
-If publication was not requested, stop with clean local branches and report the
-commands or branch order needed to publish them later.
-
-## Completion
-
-Finish only when:
-
-- the recorded source branch and SHA remain recoverable;
-- every carved PR answers one review question;
-- every carved PR satisfies its repository's budget;
-- every carved PR is green at its declared base;
-- dependencies and landing order are explicit;
-- all created worktrees are clean;
-- published PR URLs are returned when publication was requested.
+Finish when the source remains recoverable and every carved PR is within
+budget, green at its declared base, and explicit about its dependency and
+review question.

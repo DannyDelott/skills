@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two correctness axes — Standards and Spec — plus a reviewability profile and, when needed, a semantic PR split. Runs the correctness reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/PRD asked for?). Runs both reviews in parallel sub-agents and reports them side by side, then adds a reviewability profile and, when needed, a suggested semantic PR split. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
@@ -74,8 +74,7 @@ the Standards report. A working branch may exceed a publication limit when the
 repository allows it; the violation means the branch must be split before it is
 published as a PR.
 
-Build a reviewability profile without collapsing it into a numeric complexity
-score:
+Build a reviewability profile:
 
 - **Review size** — counted lines, limit, and excluded files.
 - **Review questions** — the independent behavioural or architectural claims a
