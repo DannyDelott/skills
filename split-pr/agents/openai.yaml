@@ -1,0 +1,4 @@
+interface:
+  display_name: "Split PR"
+  short_description: "Carve a branch into reviewable PRs"
+  default_prompt: "Use $split-pr to carve this branch into an independently mergeable PR stack."

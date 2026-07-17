@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/PRD asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two correctness axes — Standards and Spec — plus a reviewability profile and, when needed, a semantic PR split. Runs the correctness reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
 ---
 
 Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
@@ -9,6 +9,12 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 - **Spec** — does the code faithfully implement the originating issue / PRD / spec?
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+
+The parent review also produces a **reviewability profile**. Reviewability is
+not a third correctness axis and does not mask Standards or Spec findings. It
+describes the cognitive shape of the change and, when necessary, proposes a
+stack of smaller PRs. Review remains read-only; use `/split-pr` to perform an
+approved split.
 
 The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
 
@@ -55,7 +61,45 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 - **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
 - **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
 
-### 4. Spawn both sub-agents in parallel
+### 4. Assess reviewability
+
+Read any repository rule that limits PR size. Measure the diff against the
+fixed point with `git diff --numstat <fixed-point>...HEAD`. Follow the
+repository's exact counting and exclusion rules; do not invent exclusions. If
+the rule counts added lines only, use the first `--numstat` column and ignore
+deletions. Record every excluded file and why it was excluded.
+
+If the measured diff exceeds a documented hard limit, add a hard violation to
+the Standards report. A working branch may exceed a publication limit when the
+repository allows it; the violation means the branch must be split before it is
+published as a PR.
+
+Build a reviewability profile without collapsing it into a numeric complexity
+score:
+
+- **Review size** — counted lines, limit, and excluded files.
+- **Review questions** — the independent behavioural or architectural claims a
+  reviewer must evaluate.
+- **Domain spread** — modules and ownership boundaries touched.
+- **Semantic density** — mechanical, behavioural, or mixed.
+- **Operational risk** — migrations, authorization, money, concurrency,
+  deployment sequencing, or other production-sensitive behaviour.
+- **Dependency shape** — standalone, stacked, or expand-migrate-contract.
+
+If the change exceeds a hard limit or bundles multiple review questions,
+propose the smallest coherent PR stack. Each proposed PR must:
+
+- center on one review question;
+- satisfy the repository's size rule;
+- be independently mergeable and green;
+- declare its dependencies and verification;
+- preserve complete vertical slices where possible.
+
+For a wide mechanical change that cannot land as vertical slices, use an
+expand-migrate-contract sequence. Never split by arbitrary file groups or line
+ranges.
+
+### 5. Spawn both sub-agents in parallel
 
 Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
 
@@ -73,11 +117,16 @@ Send a single message with two `Agent` tool calls. Use the `general-purpose` sub
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
-### 5. Aggregate
+### 6. Aggregate
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
+Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Prepend any deterministic PR-budget violation to `## Standards`. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
+Then add `## Reviewability` with the profile from step 4. If a split is needed,
+add `### Suggested PR stack`; for each PR list its review question, contents,
+dependency, approximate counted additions, and independent verification. If no
+split is needed, say so explicitly.
+
+End with a one-line summary: total findings per correctness axis, the worst issue _within each axis_ (if any), and whether the current diff is publishable as one PR under the repository's reviewability rules. Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
 
 ## Why two axes
 
