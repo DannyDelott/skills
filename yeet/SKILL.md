@@ -21,8 +21,27 @@ user explicitly asks for a draft PR in the current request.
 5. Run the relevant checks for the changed files when practical.
 6. Push the current branch with tracking.
 7. Open a normal pull request with `gh pr create` or the GitHub connector.
-   The PR must be ready for review unless the user explicitly requested draft.
+   Write its description using the requirements below. The PR must be ready for
+   review unless the user explicitly requested draft.
 8. Return the PR URL, branch, commit, and checks run.
+
+## PR Description
+
+Begin with a short explanation of why the change is necessary. Ground it in the
+available issue or spec and in the actual diff:
+
+- name the concrete problem or limitation before this PR;
+- state what the PR changes; and
+- describe the observable behaviour or codebase property after it lands.
+
+Use a Before/After comparison when it makes the improvement easier to
+understand. Do not use generic claims such as "improves maintainability" unless
+they name the specific friction, risk, or repeated work removed. Then summarize
+the changes and verification. Keep the description concise and omit empty
+sections.
+
+Before opening the PR, confirm a reviewer can understand why it should exist
+without first reading the issue or diff.
 
 ## Command Shape
 

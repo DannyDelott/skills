@@ -142,9 +142,11 @@ weakening verification or forcing an arbitrary split.
 ### 5. Publish when requested
 
 When the user asks for publication, push and open the PRs in dependency order.
-State each PR's review question, parent, verification, and landing order in its
-description. Keep the original oversized PR open and leave its
-`oversized:umbrella` label applied unless the user explicitly asks to close it.
+Follow the `yeet` PR-description requirements for each child, and explain why
+that slice should exist independently. State its review question, parent,
+verification, and landing order. Keep the original oversized PR open and leave
+its `oversized:umbrella` label applied unless the user explicitly asks to close
+it.
 Update its tracking comment with every child link and mark the split complete
 when all planned PRs are available.
 
