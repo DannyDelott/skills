@@ -27,18 +27,28 @@ user explicitly asks for a draft PR in the current request.
 
 ## PR Description
 
-Begin with a short explanation of why the change is necessary. Ground it in the
-available issue or spec and in the actual diff:
+Lead with the reason for the change in plain language. A reviewer should
+understand the problem before seeing file names, classes, storage details, or
+other implementation vocabulary.
 
-- name the concrete problem or limitation before this PR;
-- state what the PR changes; and
-- describe the observable behaviour or codebase property after it lands.
+Explain the causal chain:
 
-Use a Before/After comparison when it makes the improvement easier to
-understand. Do not use generic claims such as "improves maintainability" unless
-they name the specific friction, risk, or repeated work removed. Then summarize
-the changes and verification. Keep the description concise and omit empty
-sections.
+1. Start with a concrete situation in which the problem occurs.
+2. Explain why the current system handles that situation incorrectly or
+   incompletely.
+3. Name the resulting user, operator, or codebase impact.
+4. Explain how this PR changes that behavior.
+5. For one slice of a larger stack, state what this PR enables and what remains
+   intentionally unchanged.
+
+Use a short Before/After example when it clarifies the behavior. Define
+unfamiliar domain terms when they first appear. Do not lead with a list of
+implementation changes and expect the reviewer to infer why they matter.
+
+After the plain-language rationale, summarize the technical changes and
+verification. Keep the description concise and omit empty sections. Do not use
+generic claims such as "improves maintainability" unless they name the specific
+friction, risk, or repeated work removed.
 
 Before opening the PR, confirm a reviewer can understand why it should exist
 without first reading the issue or diff.
