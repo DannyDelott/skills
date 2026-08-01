@@ -5,8 +5,9 @@ description: Split an oversized or cognitively dense branch into a stack of focu
 
 # Split PR
 
-Turn a completed working branch into a stack of focused PRs. Preserve the
-source branch as the complete reference implementation.
+Turn a completed working branch into a stack of focused PRs. Keep the original
+source branch unchanged as a fallback while publishing the carved branches as a
+GitHub native stack.
 
 ## Research queue
 
