@@ -144,7 +144,10 @@ weakening verification or forcing an arbitrary split.
 
 When the user asks for publication, push and open the PRs in dependency order.
 Follow the `yeet` PR-description requirements for each child, and explain why
-that slice should exist independently. State its review question, parent,
+that slice should exist independently. For non-visible infrastructure slices,
+include the concrete end-to-end event flow, what the slice enables next, and an
+explicit does/does-not-do-yet boundary; do not make the reviewer reconstruct
+the value from module names. State its plain-language review question, parent,
 verification, and landing order. Keep the original oversized PR open and leave
 its `oversized:umbrella` label applied unless the user explicitly asks to close
 it.

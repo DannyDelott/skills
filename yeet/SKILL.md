@@ -41,6 +41,23 @@ Explain the causal chain:
 5. For one slice of a larger stack, state what this PR enables and what remains
    intentionally unchanged.
 
+For infrastructure, architecture, migration, or stacked slices whose value is
+not directly visible, include a compact plain-English walkthrough. It must:
+
+- define the real product entities involved before naming internal modules;
+- show one concrete event flow, preferably as a short arrow chain;
+- explain what capability this PR makes possible next;
+- state explicitly what this PR does and does not do yet; and
+- restate the review question as one sentence a product owner can evaluate
+  without codebase knowledge.
+
+Example shape:
+
+```text
+User action -> upstream event -> this PR records or validates the missing state
+-> the next feature can act on it safely
+```
+
 Use a short Before/After example when it clarifies the behavior. Define
 unfamiliar domain terms when they first appear. Do not lead with a list of
 implementation changes and expect the reviewer to infer why they matter.
