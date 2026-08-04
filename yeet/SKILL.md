@@ -27,19 +27,37 @@ user explicitly asks for a draft PR in the current request.
 
 ## PR Description
 
-Lead with the reason for the change in plain language. A reviewer should
-understand the problem before seeing file names, classes, storage details, or
-other implementation vocabulary.
+Open with the reason for the change in plain language. The first paragraph must
+explain why the PR exists without requiring the issue or diff. Before a
+technical `## Summary`, implementation bullets, file names, hashes, or test
+results, explain this causal story in order:
 
-Explain the causal chain:
+`Observable problem -> plain-English cause -> changed behavior -> risk prevented -> explicit non-goals`
 
-1. Start with a concrete situation in which the problem occurs.
-2. Explain why the current system handles that situation incorrectly or
-   incompletely.
-3. Name the resulting user, operator, or codebase impact.
-4. Explain how this PR changes that behavior.
-5. For one slice of a larger stack, state what this PR enables and what remains
-   intentionally unchanged.
+1. Describe the concrete user-visible problem. If no user sees it directly,
+   name the operator or codebase situation that fails or is missing today.
+2. Translate the cause into everyday language. Introduce an internal name only
+   after defining what it means.
+3. State what will happen instead in concrete, observable terms.
+4. Name the specific harm, confusion, or failure the new behavior prevents.
+5. Name adjacent behavior this PR intentionally leaves unchanged.
+
+For a feature, the observable problem can be a capability people do not have
+yet. For one prerequisite slice of a larger stack, explain both what the slice
+enables next and what it deliberately does not implement.
+
+Use this generic opening shape when useful:
+
+```text
+[Actor] currently encounters [problem] when [situation]. This happens because
+[cause in everyday language]. This PR changes the flow so [concrete behavior],
+preventing [specific risk]. It intentionally leaves [non-goals] unchanged.
+```
+
+Do not open with a `## Summary` list such as "remove X, add Y, preserve Z."
+That is a technical inventory, not an explanation. If the opening does not
+stand on its own without the issue, diff, or unexplained internal names,
+rewrite it before publishing.
 
 For infrastructure, architecture, migration, or stacked slices whose value is
 not directly visible, include a compact plain-English walkthrough. It must:
@@ -59,16 +77,18 @@ User action -> upstream event -> this PR records or validates the missing state
 ```
 
 Use a short Before/After example when it clarifies the behavior. Define
-unfamiliar domain terms when they first appear. Do not lead with a list of
-implementation changes and expect the reviewer to infer why they matter.
+unfamiliar domain terms when they first appear.
 
-After the plain-language rationale, summarize the technical changes and
-verification. Keep the description concise and omit empty sections. Do not use
-generic claims such as "improves maintainability" unless they name the specific
-friction, risk, or repeated work removed.
+After the causal explanation, summarize the technical changes and verification
+in concise sections. Keep hashes, file names, internal modules, and test
+matrices there. Omit empty sections. Do not use generic claims such as
+"improves maintainability" unless they name the specific friction, risk, or
+repeated work removed.
 
-Before opening the PR, confirm a reviewer can understand why it should exist
-without first reading the issue or diff.
+Before opening the PR, reject any body whose opening is only a list of changes.
+Confirm that a reviewer can identify the observable problem, translated cause,
+changed behavior, prevented risk, and explicit non-goals without first reading
+the issue or diff.
 
 ## Command Shape
 
