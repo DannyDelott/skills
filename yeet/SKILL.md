@@ -1,28 +1,27 @@
 ---
 name: yeet
-description: Publish local changes to GitHub by staging explicit files, committing, pushing, and opening a ready-for-review pull request. Use when the user asks to yeet, ship, publish, push up, open a PR, create a pull request, or get local work into review; this local skill replaces github:yeet and must not create draft PRs unless the user explicitly asks for a draft.
+description: Publish local changes to GitHub by staging explicit files, committing, pushing, and opening a ready-for-review pull request. Use when the user asks to yeet, ship, publish, push up, open a PR, create a pull request, or get local work into review; this local skill replaces github:yeet and uses draft status only when the user explicitly asks for a draft.
 ---
 
 # Yeet
 
-Publish local work to GitHub with a normal ready-for-review PR by default.
-
-Do not use `github:yeet` for this workflow. Do not create draft PRs unless the
-user explicitly asks for a draft PR in the current request.
+Use this local workflow instead of `github:yeet`. Publish local work to GitHub
+with a normal ready-for-review PR by default. Reserve draft status for an
+explicit draft request in the current conversation.
 
 ## Workflow
 
 1. Inspect the worktree with `git status -sb`.
-2. If the worktree has unrelated changes, stage only the files that belong to
-   the requested PR. Never use `git add -A` in a mixed worktree.
+2. If the worktree has unrelated changes, stage only the requested files by
+   explicit path.
 3. If on `main`, `master`, or the repo default branch, create a short
    `codex/<description>` branch from the requested base branch.
 4. Commit with a terse message that describes the actual diff.
 5. Run the relevant checks for the changed files when practical.
 6. Push the current branch with tracking.
 7. Open a normal pull request with `gh pr create` or the GitHub connector.
-   Write its description using the requirements below. The PR must be ready for
-   review unless the user explicitly requested draft.
+   Write its description using the requirements below. Use ready-for-review
+   status by default and draft status only after an explicit draft request.
 8. Return the PR URL, branch, commit, and checks run.
 
 ## PR Description
@@ -42,9 +41,9 @@ results, explain this causal story in order:
 4. Name the specific harm, confusion, or failure the new behavior prevents.
 5. Name adjacent behavior this PR intentionally leaves unchanged.
 
-For a feature, the observable problem can be a capability people do not have
-yet. For one prerequisite slice of a larger stack, explain both what the slice
-enables next and what it deliberately does not implement.
+For a feature, the observable problem can be a missing capability. For one
+prerequisite slice of a larger stack, explain both what the slice enables next
+and which behavior remains for later slices.
 
 Use this generic opening shape when useful:
 
@@ -54,10 +53,10 @@ Use this generic opening shape when useful:
 preventing [specific risk]. It intentionally leaves [non-goals] unchanged.
 ```
 
-Do not open with a `## Summary` list such as "remove X, add Y, preserve Z."
-That is a technical inventory, not an explanation. If the opening does not
-stand on its own without the issue, diff, or unexplained internal names,
-rewrite it before publishing.
+Place a technical `## Summary` list such as "remove X, add Y, preserve Z" after
+the causal explanation. Treat that list as an implementation inventory.
+Rewrite an opening that relies on the issue, diff, or unexplained internal
+names until it stands on its own.
 
 For infrastructure, architecture, migration, or stacked slices whose value is
 not directly visible, include a compact plain-English walkthrough. It must:
@@ -65,7 +64,8 @@ not directly visible, include a compact plain-English walkthrough. It must:
 - define the real product entities involved before naming internal modules;
 - show one concrete event flow, preferably as a short arrow chain;
 - explain what capability this PR makes possible next;
-- state explicitly what this PR does and does not do yet; and
+- state explicitly the behavior this PR adds and the behavior left for later;
+  and
 - restate the review question as one sentence a product owner can evaluate
   without codebase knowledge.
 
@@ -81,11 +81,11 @@ unfamiliar domain terms when they first appear.
 
 After the causal explanation, summarize the technical changes and verification
 in concise sections. Keep hashes, file names, internal modules, and test
-matrices there. Omit empty sections. Do not use generic claims such as
-"improves maintainability" unless they name the specific friction, risk, or
-repeated work removed.
+matrices there. Omit empty sections. Make each value claim specific: replace
+"improves maintainability" with the particular friction, risk, or repeated work
+removed.
 
-Before opening the PR, reject any body whose opening is only a list of changes.
+Before opening the PR, verify that the body starts with the causal explanation.
 Confirm that a reviewer can identify the observable problem, translated cause,
 changed behavior, prevented risk, and explicit non-goals without first reading
 the issue or diff.
@@ -102,17 +102,17 @@ git push -u origin "$(git branch --show-current)"
 gh pr create --base <base> --head "$(git branch --show-current)" --title "<title>" --body-file <body-file>
 ```
 
-Do not include `--draft` unless the user explicitly asks for a draft PR.
+Include `--draft` only after an explicit request for a draft PR.
 
 ## Existing Branches
 
-If the branch is already pushed and only needs a PR, do not recommit or amend.
-Create the ready-for-review PR from the existing branch.
+If the branch is already pushed and only needs a PR, preserve its existing
+commits and create the ready-for-review PR from that branch.
 
 ## Safety
 
-- Never stage unrelated user changes silently.
-- Never revert unrelated user changes.
-- Never force-push unless the task is explicitly to update an existing PR branch
-  and a force-push is necessary.
+- Stage only explicitly scoped files and report any unrelated user changes.
+- Preserve unrelated user changes.
+- Use a normal push by default. Reserve force-push with lease for an explicit
+  request to update an existing PR when the branch history requires it.
 - If checks fail, report the failure and fix it when it is in scope.
