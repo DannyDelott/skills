@@ -10,6 +10,16 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
 
+### Review-model invariant
+
+The Standards and Spec reviewers are a deliberate exception to the general
+`luna_worker` delegation preference. Run both reviewers with GPT-5.6-Sol at
+high reasoning: `model="gpt-5.6-sol"` and `reasoning_effort="high"`. Use the
+harness's equivalent explicit model and reasoning fields when the field names
+differ. Do not use `luna_worker`, inherit the parent's model, or silently fall
+back to another model. If the runner cannot honor this override, stop before
+spawning the review and report the configuration blocker.
+
 The parent review also produces a **reviewability profile**. Reviewability is
 not a third correctness axis and does not mask Standards or Spec findings. It
 describes the cognitive shape of the change and, when necessary, proposes a
@@ -100,7 +110,10 @@ ranges.
 
 ### 5. Spawn both sub-agents in parallel
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+Send a single message with two `Agent` tool calls. Use the `general-purpose`
+subagent for both, explicitly setting `model="gpt-5.6-sol"` and
+`reasoning_effort="high"` on each call. These are two independent review
+workers, not `luna_worker` tasks.
 
 **Standards sub-agent prompt** — include:
 
