@@ -28,14 +28,12 @@ This repo intentionally does not mirror Matt's repo layout. Matt's upstream now 
 These are the currently selected upstream skills:
 
 ```text
-design-an-interface=skills/deprecated/design-an-interface
 ask-matt=skills/engineering/ask-matt
 code-review=skills/engineering/code-review
 codebase-design=skills/engineering/codebase-design
 wayfinder=skills/engineering/wayfinder
 diagnosing-bugs=skills/engineering/diagnosing-bugs
 domain-modeling=skills/engineering/domain-modeling
-edit-article=skills/personal/edit-article
 grill-me=skills/productivity/grill-me
 grill-with-docs=skills/engineering/grill-with-docs
 grilling=skills/productivity/grilling
@@ -44,20 +42,18 @@ implement=skills/engineering/implement
 improve-codebase-architecture=skills/engineering/improve-codebase-architecture
 loop-me=skills/in-progress/loop-me
 prototype=skills/engineering/prototype
-request-refactor-plan=skills/deprecated/request-refactor-plan
 resolving-merge-conflicts=skills/engineering/resolving-merge-conflicts
 research=skills/engineering/research
 teach=skills/productivity/teach
 tdd=skills/engineering/tdd
-to-questionnaire=skills/in-progress/to-questionnaire
+to-questionnaire=skills/productivity/to-questionnaire
 to-tickets=skills/engineering/to-tickets
 to-spec=skills/engineering/to-spec
 triage=skills/engineering/triage
-ubiquitous-language=skills/deprecated/ubiquitous-language
-wizard=skills/in-progress/wizard
+wizard=skills/engineering/wizard
 writing-beats=skills/in-progress/writing-beats
 writing-fragments=skills/in-progress/writing-fragments
-writing-great-skills=skills/productivity/writing-great-skills
+writing-for-agents=skills/productivity/writing-for-agents
 writing-shape=skills/in-progress/writing-shape
 ```
 
