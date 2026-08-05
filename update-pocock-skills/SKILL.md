@@ -50,6 +50,7 @@ to-questionnaire=skills/productivity/to-questionnaire
 to-tickets=skills/engineering/to-tickets
 to-spec=skills/engineering/to-spec
 triage=skills/engineering/triage
+wait-what=skills/productivity/wait-what
 wizard=skills/engineering/wizard
 writing-beats=skills/in-progress/writing-beats
 writing-fragments=skills/in-progress/writing-fragments
