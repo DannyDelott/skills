@@ -6,8 +6,8 @@ description: Split an oversized or cognitively dense branch into a stack of focu
 # Split PR
 
 Turn a completed working branch into a stack of focused PRs. Keep the original
-source branch unchanged as a fallback while publishing the carved branches as a
-GitHub native stack.
+source branch unchanged as a fallback while publishing the carved branches with
+GitHub's native stacked pull requests feature.
 
 ## Research queue
 
@@ -143,6 +143,16 @@ weakening verification or forcing an arbitrary split.
 ### 5. Publish when requested
 
 When the user asks for publication, push and open the PRs in dependency order.
+Publish through GitHub's native stacked pull requests feature, not merely as
+ordinary PRs with chained base branches. Use the official `github/gh-stack` CLI
+extension, installing it with `gh extension install github/gh-stack` when
+`gh stack` is unavailable. Adopt the carved branches from bottom to top with
+`gh stack init --base <original-base> <branches...>`, then create or update the
+ready-for-review PRs and GitHub stack with `gh stack submit --open`.
+If the branches or PRs are managed outside `gh stack`, use
+`gh stack link --base <original-base> --open <branches-or-prs...>` from bottom
+to top instead. Finish publication only after every child PR's REST response
+reports a non-null `.stack`, confirming native GitHub stack membership.
 Follow the `yeet` PR-description requirements for each child, and explain why
 that slice should exist independently. For non-visible infrastructure slices,
 include the concrete end-to-end event flow, what the slice enables next, and an
