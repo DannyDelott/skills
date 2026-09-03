@@ -96,7 +96,9 @@ These skills help you write, refactor, and fix code.
   npx skills@latest add mattpocock/skills/git-guardrails-claude-code
   ```
 
-- **show-me** — After a change is done, copy `.env` from local `main`, start the local UI server, and hand back the URL to open.
+- **run-local-ui** — Start a local UI server, reusing the app's `.env` from local `main` when required, and hand back the URL to open.
+
+- **show-me** — Explain the current topic visually with concise diagrams, code-shape sketches, or focused HTML artifacts. Sourced from [HumanLayer's skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me/skills/show-me).
 
 - **update-pocock-skills** — Sync selected Matt Pocock skills from upstream into this repo's root-level global skill layout while flagging conflicts and new upstream skills.
 
