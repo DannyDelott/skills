@@ -44,6 +44,7 @@ loop-me=skills/in-progress/loop-me
 prototype=skills/engineering/prototype
 resolving-merge-conflicts=skills/engineering/resolving-merge-conflicts
 research=skills/engineering/research
+retro=skills/in-progress/retro
 teach=skills/productivity/teach
 tdd=skills/engineering/tdd
 to-questionnaire=skills/productivity/to-questionnaire
