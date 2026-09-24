@@ -1,0 +1,4 @@
+interface:
+  display_name: "Change Summary"
+  short_description: "Review planned files and tests before implementation"
+  default_prompt: "Use $change-summary to present the agreed change, planned file tree, and test descriptions before implementation."
