@@ -19,10 +19,14 @@ explicit draft request in the current conversation.
 4. Commit with a terse message that describes the actual diff.
 5. Run the relevant checks for the changed files when practical.
 6. Push the current branch with tracking.
-7. Open a normal pull request with `gh pr create` or the GitHub connector.
-   Write its description using the requirements below. Use ready-for-review
-   status by default and draft status only after an explicit draft request.
-8. Return the PR URL, branch, commit, and checks run.
+7. Draft the pull request description using the requirements below.
+8. Treat the complete draft as the last message and call the Skill tool with
+   "wait-what". Replace the draft with its re-pitch, then confirm the re-pitch
+   preserved every required fact, scope boundary, and technical section.
+9. Open a normal pull request with `gh pr create` or the GitHub connector using
+   the re-pitched description. Use ready-for-review status by default and draft
+   status only after an explicit draft request.
+10. Return the PR URL, branch, commit, and checks run.
 
 ## PR Description
 

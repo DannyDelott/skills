@@ -1,6 +1,6 @@
 ---
 name: codebase-design
-description: Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.
+description: Shared vocabulary for designing deep modules. Use when writing implementation code, designing or improving a module's interface, finding deepening opportunities, deciding where a seam goes, making code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.
 ---
 
 # Codebase Design
@@ -65,6 +65,9 @@ When designing an interface, ask:
 - **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a seam unless something actually varies across it.
 
 ## Designing for testability
+
+Use test-runner controls for platform time, timers, randomness, UUIDs, and other
+globals; do not add an implementation seam whose only adapter is a test fake.
 
 Good interfaces make testing natural:
 

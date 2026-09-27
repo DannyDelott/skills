@@ -25,7 +25,9 @@ describes the cognitive shape of the change and, when necessary, proposes a
 stack of smaller PRs. Review remains read-only; use `/split-pr` to perform an
 approved split.
 
-The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
+The issue tracker should have been provided to you. If
+`docs/agents/issue-tracker.md` is missing, tell the user to run
+`/setup-matt-pocock-skills`.
 
 ## Process
 
@@ -109,10 +111,8 @@ ranges.
 
 ### 5. Spawn both sub-agents in parallel
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose`
-subagent for both, explicitly setting `model="gpt-5.6-sol"` and
-`reasoning_effort="high"` on each call. These are two independent review
-workers.
+Spawn two independent review workers in parallel, explicitly setting
+`model="gpt-5.6-sol"` and `reasoning_effort="high"` on each call.
 
 **Standards sub-agent prompt** — include:
 
