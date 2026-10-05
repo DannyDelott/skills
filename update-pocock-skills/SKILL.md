@@ -16,6 +16,7 @@ This repo intentionally does not mirror Matt's repo layout. Matt's upstream now 
 ## Rules
 
 - Fetch `upstream/main` first.
+- For a requested release, sync its tag rather than unreleased `main`; include the latest patch in that release series.
 - Never run a blind merge from upstream.
 - Preserve this repo's root-level skill layout.
 - If an existing local skill has uncommitted edits, show the conflict/diff before overwriting.
@@ -42,9 +43,8 @@ implement=skills/engineering/implement
 improve-codebase-architecture=skills/engineering/improve-codebase-architecture
 loop-me=skills/in-progress/loop-me
 prototype=skills/engineering/prototype
-resolving-merge-conflicts=skills/engineering/resolving-merge-conflicts
 research=skills/engineering/research
-retro=skills/in-progress/retro
+retro=skills/engineering/retro
 teach=skills/productivity/teach
 tdd=skills/engineering/tdd
 to-questionnaire=skills/productivity/to-questionnaire
@@ -63,9 +63,24 @@ Explicitly excluded unless the user asks:
 
 ```text
 caveman
+implement-spec
+pr
 setup-matt-pocock-skills
 write-a-skill
 ```
+
+## Local baseline and overrides
+
+Last sync: `v1.3.1` (`0b6cee10f260a2e048279cf737bfd3e37b1fce0b`). Compare local files to this upstream baseline, then apply the new upstream delta while preserving these overrides:
+
+- `code-review`: explicit GPT-5.6-Sol/high reviewers, expanded standards discovery, PR-size and reviewability checks, and matching UI metadata.
+- `codebase-design`: implementation trigger and test-runner controls instead of seams used only by test fakes.
+- `handoff` and `wait-what`: model-invokable, including their Codex policy metadata.
+- `ask-matt`: route publication through local `yeet`; omit the uninstalled `pr` and `implement-spec` workflows.
+
+Keep locally authored skills, including `yeet`, `split-pr`, and `change-summary`, outside the upstream copy operation. `resolving-merge-conflicts` was removed in v1.3 and is no longer installed.
+
+The v1.3 domain-doc migration is `CONTEXT.md` → `GLOSSARY.md` and `CONTEXT-MAP.md` → `GLOSSARY-MAP.md`. In projects included in the migration scope, rename existing files and update their references together; check for an existing destination before renaming. Other projects still need this migration before the new skills can find their old glossary.
 
 ## Process
 
@@ -90,7 +105,7 @@ git ls-tree -r --name-only upstream/main |
   sort -u
 ```
 
-4. For existing mapped skills, compare before copying:
+4. For existing mapped skills, compare against the last synced baseline and target before copying. Use `upstream/main` below only when it is the intended target; otherwise substitute the release tag:
 
 ```bash
 git diff --no-index -- <local-skill>/SKILL.md <(git show upstream/main:<upstream-path>/SKILL.md)
