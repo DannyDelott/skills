@@ -19,10 +19,11 @@ explicit draft request in the current conversation.
 4. Commit with a terse message that describes the actual diff.
 5. Run the relevant checks for the changed files when practical.
 6. Push the current branch with tracking.
-7. Draft the pull request description using the requirements below.
+7. Call the Skill tool with "pr" and draft the pull request description using
+   its Summary, Evidence, and Merge Danger format.
 8. Treat the complete draft as the last message and call the Skill tool with
    "wait-what". Replace the draft with its re-pitch, then confirm the re-pitch
-   preserved every required fact, scope boundary, and technical section.
+   preserved the `pr` structure, evidence, and scope boundaries.
 9. Open a normal pull request with `gh pr create` or the GitHub connector using
    the re-pitched description. Use ready-for-review status by default and draft
    status only after an explicit draft request.
@@ -30,69 +31,9 @@ explicit draft request in the current conversation.
 
 ## PR Description
 
-Open with the reason for the change in plain language. The first paragraph must
-explain why the PR exists without requiring the issue or diff. Before a
-technical `## Summary`, implementation bullets, file names, hashes, or test
-results, explain this causal story in order:
-
-`Observable problem -> plain-English cause -> changed behavior -> risk prevented -> explicit non-goals`
-
-1. Describe the concrete user-visible problem. If no user sees it directly,
-   name the operator or codebase situation that fails or is missing today.
-2. Translate the cause into everyday language. Introduce an internal name only
-   after defining what it means.
-3. State what will happen instead in concrete, observable terms.
-4. Name the specific harm, confusion, or failure the new behavior prevents.
-5. Name adjacent behavior this PR intentionally leaves unchanged.
-
-For a feature, the observable problem can be a missing capability. For one
-prerequisite slice of a larger stack, explain both what the slice enables next
-and which behavior remains for later slices.
-
-Use this generic opening shape when useful:
-
-```text
-[Actor] currently encounters [problem] when [situation]. This happens because
-[cause in everyday language]. This PR changes the flow so [concrete behavior],
-preventing [specific risk]. It intentionally leaves [non-goals] unchanged.
-```
-
-Place a technical `## Summary` list such as "remove X, add Y, preserve Z" after
-the causal explanation. Treat that list as an implementation inventory.
-Rewrite an opening that relies on the issue, diff, or unexplained internal
-names until it stands on its own.
-
-For infrastructure, architecture, migration, or stacked slices whose value is
-not directly visible, include a compact plain-English walkthrough. It must:
-
-- define the real product entities involved before naming internal modules;
-- show one concrete event flow, preferably as a short arrow chain;
-- explain what capability this PR makes possible next;
-- state explicitly the behavior this PR adds and the behavior left for later;
-  and
-- restate the review question as one sentence a product owner can evaluate
-  without codebase knowledge.
-
-Example shape:
-
-```text
-User action -> upstream event -> this PR records or validates the missing state
--> the next feature can act on it safely
-```
-
-Use a short Before/After example when it clarifies the behavior. Define
-unfamiliar domain terms when they first appear.
-
-After the causal explanation, summarize the technical changes and verification
-in concise sections. Keep hashes, file names, internal modules, and test
-matrices there. Omit empty sections. Make each value claim specific: replace
-"improves maintainability" with the particular friction, risk, or repeated work
-removed.
-
-Before opening the PR, verify that the body starts with the causal explanation.
-Confirm that a reviewer can identify the observable problem, translated cause,
-changed behavior, prevented risk, and explicit non-goals without first reading
-the issue or diff.
+`pr` owns the description format. Keep the concrete reason for the change clear
+within its Summary, use only observed evidence, and disclose validation limits.
+Use `wait-what` to simplify the language while preserving that structure.
 
 ## Command Shape
 

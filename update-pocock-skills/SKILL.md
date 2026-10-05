@@ -40,9 +40,11 @@ grill-with-docs=skills/engineering/grill-with-docs
 grilling=skills/productivity/grilling
 handoff=skills/productivity/handoff
 implement=skills/engineering/implement
+implement-spec=skills/engineering/implement-spec
 improve-codebase-architecture=skills/engineering/improve-codebase-architecture
 loop-me=skills/in-progress/loop-me
 prototype=skills/engineering/prototype
+pr=skills/engineering/pr
 research=skills/engineering/research
 retro=skills/engineering/retro
 teach=skills/productivity/teach
@@ -63,8 +65,6 @@ Explicitly excluded unless the user asks:
 
 ```text
 caveman
-implement-spec
-pr
 setup-matt-pocock-skills
 write-a-skill
 ```
@@ -76,7 +76,7 @@ Last sync: `v1.3.1` (`0b6cee10f260a2e048279cf737bfd3e37b1fce0b`). Compare local 
 - `code-review`: explicit GPT-5.6-Sol/high reviewers, expanded standards discovery, PR-size and reviewability checks, and matching UI metadata.
 - `codebase-design`: implementation trigger and test-runner controls instead of seams used only by test fakes.
 - `handoff` and `wait-what`: model-invokable, including their Codex policy metadata.
-- `ask-matt`: route publication through local `yeet`; omit the uninstalled `pr` and `implement-spec` workflows.
+- `ask-matt`: use upstream `pr` for PR descriptions and local `yeet` for publishing.
 
 Keep locally authored skills, including `yeet`, `split-pr`, and `change-summary`, outside the upstream copy operation. `resolving-merge-conflicts` was removed in v1.3 and is no longer installed.
 
